@@ -4,7 +4,7 @@
 
 <cfsavecontent variable="includes.mainContent">
 <html>
-    <h1>hi</h1>
+    <h1>template page</h1>
 </html>
 </cfsavecontent>
 
