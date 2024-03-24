@@ -3,9 +3,9 @@
 </cfscript>
 
 <cfsavecontent variable="includes.mainContent">
-<html>
+<div>
     <h1>hi</h1>
-</html>
+</div>
 </cfsavecontent>
 
 <cfinclude template="./layouts/mainLayout.cfm">

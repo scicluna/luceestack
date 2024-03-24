@@ -14,7 +14,9 @@ component {
         return true;
     }
 
-    public void function onSessionStart(){}
+    public void function onSessionStart(){
+        session.authorizedUser = true;
+    }
 
     public void function onRequest(targetPage){
         cfinclude(template=targetPage);
