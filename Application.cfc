@@ -15,7 +15,8 @@ component {
     }
 
     public void function onSessionStart(){
-        session.authorizedUser = true;
+        session.token = generateSecretKey('RC4');
+        cfcookie(name="csrfToken", value="#session.token#", httponly="true");
     }
 
     public void function onRequest(targetPage){
