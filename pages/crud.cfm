@@ -2,19 +2,21 @@
 
 </cfscript>
 
+<cfoutput>
 <cfsavecontent variable="includes.mainContent">
-<div>
-    <form class="p-2" 
-        hx-post="../cfc/crud.cfc?method=crudOperations"
-        hx-target="#listOfThings"
-        hx-swap="afterbegin"
-        method="POST">
+<div class="p-2">
+    <form
+    hx-post="../cfc/crud.cfc?method=crudOperations"
+    hx-target="##listOfThings"
+    hx-swap="afterend"
+    method="POST">
         <input class="shadow-sm shadow-black bg-gray-300" type="text" name="thing"/>
         <input type="hidden" value="add" name="action"/>
+        <input type="hidden" value="#session.encryptedToken#" name="token"/>
         <button type="submit">Submit</button>
     </form>
 
-    <div id="listOfThings">
+    <div id="listOfThings" >
     <!-- Updated content will go here -->
     </div>
 </div>
@@ -27,5 +29,6 @@
     });
 </script>
 </cfsavecontent>
+</cfoutput>
 
 <cfinclude template="../layouts/mainLayout.cfm">

@@ -1,5 +1,5 @@
 component {
-    this.name = "v01";
+    this.name = "v04";
     this.applicationTimeout = createTimeSpan(0, 2, 0, 0); // 2 hours
     this.sessionManagement = true;
     this.sessionTimeout = createTimeSpan(0, 0, 30, 0); // 30 minutes
@@ -11,13 +11,15 @@ component {
     public boolean function onApplicationStart(){
         application.name = "My Applciation Name";
         application.root = "luceestack";
+        application.key = "verycoolsecrestareverycoolindeed";
         return true;
     }
 
     public void function onSessionStart(){
-        session.token = generateSecretKey('RC4');
-        cfcookie(name="csrfToken", value="#session.token#", httponly="true");
+        session.token = generateSecretKey("AES", 256);
+        session.encryptedToken = encrypt(session.token, application.key, "AES", "Base64");
     }
+    
 
     public void function onRequest(targetPage){
         cfinclude(template=targetPage);
