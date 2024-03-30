@@ -7,4 +7,4 @@
     <link href="/#ListFirst(cgi.SCRIPT_NAME, "/")#/assets/styles/output.css" rel="stylesheet" />
     <script src="https://unpkg.com/htmx.org"></script>
 </head>
-</cfoutput>
+</cfoutput> 

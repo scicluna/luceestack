@@ -29,11 +29,15 @@ component{
     * @hint Handles adding the thing
     * @form Submitted form
     */
-    private string function crudAdd(required struct form) {
+    private string function crudAdd(required struct form) { 
+        if(form.thing EQ ""){
+            return ""
+        }
+
         var thingId = createUUID();
         var thingName = form.thing;
         savecontent variable="item"{
-            include "../assets/components/crud/item.cfm";
+            include "../assets/components/crud/add.cfm";
         }
         return item        
     }
@@ -44,18 +48,6 @@ component{
     */
     private string function crudEdit(required struct form) {
         return serializeJSON({success: true, message: "Item edited successfully"});
-    }
-
-    /**
-    * @hint Handles deleting the thing
-    * @form Submitted form
-    */
-    private string function crudDelete(required struct form) {
-        // Ensure that the itemId is provided
-        if (!structKeyExists(form, "itemId")) {
-            return "<div class='error'>Item ID is required for deletion.</div>";
-        }
-        return "";
     }
 
     /**

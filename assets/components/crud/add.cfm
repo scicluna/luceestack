@@ -1,6 +1,6 @@
 <cfoutput>
-    <div class="item" id="item_#thingId#">
-        <span>#thingName#</span>
+    <div class="item flex gap-4" id="item_#thingId#">
+        <p>#thingName#</p>
         <form method="POST"
               hx-post="../cfc/crud.cfc"
               hx-target="##item_#thingId#"

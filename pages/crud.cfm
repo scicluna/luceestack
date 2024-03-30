@@ -9,6 +9,7 @@
     hx-post="../cfc/crud.cfc?method=crudOperations"
     hx-target="##listOfThings"
     hx-swap="afterend"
+    
     method="POST">
         <input class="shadow-sm shadow-black bg-gray-300" type="text" name="thing"/>
         <input type="hidden" value="add" name="action"/>
