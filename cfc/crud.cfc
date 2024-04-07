@@ -5,7 +5,7 @@ component{
     */
     remote string function crudOperations() httpmethod="post" output="false" returnFormat="plain"{
 
-        if (!isValidRequest(form)){
+        if (!isValidRequest()){
            return "You are not authorized";
         }
 
@@ -52,18 +52,18 @@ component{
 
     /**
     * @hint Handles API request security
-    * @form Submitted form
     */
-    private boolean function isValidRequest(required struct form){
+    private boolean function isValidRequest(){
         if (!clientVerify()){
             return false;
         }
 
-        if (!verifyToken(form)){
+        if (!isDefined("CGI.HTTP_AUTHORIZATION") || listFirst(CGI.HTTP_AUTHORIZATION, " ") != "Bearer") {
             return false;
         }
-
-        return true;
+        
+        var jwtToken = listLast(CGI.HTTP_AUTHORIZATION, " ");
+        return verifyJWT(jwtToken);
     }
 
     /**
@@ -80,16 +80,17 @@ component{
         return listFindNoCase(arrayToList(localIPs), requestIP) > 0;
     }
 
-    /**
-    * @hint Verifies an internal call
-    * @form The submitted form with a token on it
-    */
-    private boolean function verifyToken(required struct form){
-        if(!isDefined("form.token")){
+    private boolean function verifyJWT(required string token) {
+        // Implement JWT verification
+        // Decode and verify the JWT using the same key used for creation
+        // Check the exp claim to ensure the token hasn't expired
+        
+        var jwt = new jwt(key=session.secretKey);
+        try{
+            var result = jwt.decode(token);
+            return true;
+        } catch (any e){
             return false;
         }
-        var decryptedToken = decrypt(form.token, application.key, "AES", "Base64");
-    
-        return decryptedToken == session.token;
     }
 }

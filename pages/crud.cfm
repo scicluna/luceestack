@@ -6,14 +6,13 @@
 <cfsavecontent variable="includes.mainContent">
 <div class="p-2">
     <form
-    hx-post="../cfc/crud.cfc?method=crudOperations"
+    hx-post="../cfc/Crud.cfc?method=crudOperations"
     hx-target="##listOfThings"
     hx-swap="afterend"
     
     method="POST">
         <input class="shadow-sm shadow-black bg-gray-300" type="text" name="thing"/>
         <input type="hidden" value="add" name="action"/>
-        <input type="hidden" value="#session.encryptedToken#" name="token"/>
         <button type="submit">Submit</button>
     </form>
 
@@ -23,7 +22,14 @@
 </div>
 
 <script>
-        document.addEventListener('htmx:afterSwap', function(evt) {
+    document.addEventListener('htmx:configRequest', function(evt) {
+        var jwtToken = #serializeJSON(session.jwt)#;
+        if (jwtToken) {
+            evt.detail.headers['Authorization'] = 'Bearer ' + jwtToken;
+        }
+    });
+
+    document.addEventListener('htmx:afterSwap', function(evt) {
         if (evt.detail.target.id === 'listOfThings') {
             document.querySelector('form').reset();
         }

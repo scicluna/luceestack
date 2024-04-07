@@ -11,13 +11,11 @@ component {
     public boolean function onApplicationStart(){
         application.name = "My Applciation Name";
         application.root = "luceestack";
-        application.key = "verycoolsecrestareverycoolindeed";
         return true;
     }
 
     public void function onSessionStart(){
-        session.token = generateSecretKey("AES", 256);
-        session.encryptedToken = encrypt(session.token, application.key, "AES", "Base64");
+        session.secretKey = generateSecretKey("AES", 256);
     }
     
 
