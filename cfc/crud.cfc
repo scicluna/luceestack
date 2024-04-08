@@ -36,8 +36,9 @@ component{
 
         var thingId = createUUID();
         var thingName = form.thing;
+        //write DB interactions
         savecontent variable="item"{
-            include "../assets/components/crud/add.cfm";
+            include "../assets/components/crud/item.cfm";
         }
         return item        
     }
@@ -47,7 +48,21 @@ component{
     * @form Submitted form
     */
     private string function crudEdit(required struct form) {
-        return serializeJSON({success: true, message: "Item edited successfully"});
+        var thingId = form.itemId;
+        var thingName = form.newThing
+        //write DB interactions
+        savecontent variable="item"{
+            include "../assets/components/crud/item.cfm";
+        }
+        return item;
+    }
+
+    /**
+    * @hint Handles deleting the thing
+    */
+    private string function crudDelete() {
+        //write DB interactions
+        return ""
     }
 
     /**
@@ -70,21 +85,17 @@ component{
     * @hint Verifies an internal call
     */
     private boolean function clientVerify() {
-        // Get the IP address of the requestor
         var requestIP = CGI.REMOTE_ADDR;
-    
-        // List of IPs considered to be "local"
         var localIPs = ["127.0.0.1", "::1", "0:0:0:0:0:0:0:1", CGI.SERVER_ADDR];
     
-        // Check if the requestIP is in the list of local IPs
         return listFindNoCase(arrayToList(localIPs), requestIP) > 0;
     }
 
+    /**
+    * @hint Verifies the JWT header
+    * @token The JWT token
+    */
     private boolean function verifyJWT(required string token) {
-        // Implement JWT verification
-        // Decode and verify the JWT using the same key used for creation
-        // Check the exp claim to ensure the token hasn't expired
-        
         var jwt = new jwt(key=session.secretKey);
         try{
             var result = jwt.decode(token);
